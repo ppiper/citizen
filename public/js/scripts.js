@@ -23,10 +23,10 @@ function readURL(input) {
   }
 }
 
-$('.join-button').click(function() {
+$('.button-join').click(function() {
   var id = $(this).attr('data-project');
-  $.post('/project/' + id + '/join', function(data) {
-    console.log(data);
+  $.post('/project/' + id + '/join', function(string) {
+    $('.button-join').text(string);
   });
 });
 

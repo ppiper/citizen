@@ -20,6 +20,8 @@ var Sponsor = require('./models/sponsor');
 
 // var Article = require('./models/article');
 
+var _ = require('lodash');
+
 mongoose.connect('mongodb://localhost:27017/citizencare');
 
 var app = express();
@@ -81,18 +83,28 @@ function checkUser(req, res, next) {
   if (req.user.isActive && req.isAuthenticated()) {
     next();
   }
+  next();
+}
+
+function isContributor(req, res, next) {
+  // retrieve all cats from the DB and console.log each one
+  console.log("contributorr:", res);
+  // if (req.) {
+  //   next();
+  // }
+  next();
 }
 
 //function de récupération des actors du projet (find)
 
-function getResources(id, callback) {
+function getResources(req, res, next) {
   // retrieve all cats from the DB and console.log each one
-  Project.findById(id, function(err, resources) {
+  Project.findById(req.params.id, function(err, project) {
     if (err) {
       console.log('An error occurred');
       console.log(err);
     } else {
-      req.resources = resources;
+      req.resources = project.resources;
       next();
     }
   });
@@ -159,20 +171,53 @@ function updateAccount(user, callback) {
 // }]
 
 
-function updateProject(id, user, callback) {
-  User.update({
+function updateProject(id, obj, callback) {
+  console.log(id, obj);
+  Project.update({
     _id: id
   }, {
-    $set: {
-
-    },
-
-  }, function(err, user) {
+    $set: obj,
+  }, function(err, response) {
     if (err) {
       console.log('An error occurred');
       console.log(err);
     } else {
-      callback(user);
+      //console.log("update", response);
+      callback(true);
+    }
+  });
+}
+
+// JOIN PROJECT
+function joinProject(id, obj, callback) {
+  console.log(id, obj);
+  Project.update({
+    _id: id
+  }, {
+    $set: obj,
+  }, function(err, response) {
+    if (err) {
+      console.log('An error occurred');
+      console.log(err);
+    } else {
+      callback('JOIN');
+    }
+  });
+}
+
+// LEAVE PROJECT
+function leaveProject(id, obj, callback) {
+  console.log(id, obj);
+  Project.update({
+    _id: id
+  }, {
+    $set: obj,
+  }, function(err, response) {
+    if (err) {
+      console.log('An error occurred');
+      console.log(err);
+    } else {
+      callback('LEAVE');
     }
   });
 }
@@ -318,10 +363,10 @@ app.post('/publish', upload.array('photos', 12), photosToArray, function(req, re
 
 });
 
-app.get('/project/:id', function(req, res) {
+app.get('/project/:id', isContributor, function(req, res) {
   var id = req.params.id;
   var callback = function(project) {
-    console.log("project:", project);
+    //console.log("project:", project);
     res.render('project', {
       isLogged: req.isAuthenticated(),
       project: project,
@@ -344,7 +389,20 @@ app.get('/project/:id', function(req, res) {
 
 app.post('/project/:id/join', checkUser, getResources, function(req, res) {
   var id = req.params.id;
-  console.log(req.resources);
+  var callback = (button) => {
+    res.send(button);
+  }
+  if(!_.find(req.resources, {contributor: req.user._id})) {
+    console.log("Le contributeur n'est PAS associé au projet");
+    req.resources.push({contributor: req.user._id});
+    var obj = req.resources;
+    console.log(obj);
+    joinProject(id, {resources: obj}, callback);
+  } else {
+    req.resources = _.reject(req.resources, {contributor: req.user._id});
+    var obj = req.resources;
+    leaveProject(id, {resources: obj}, callback);
+  }
 });
 
 
@@ -434,10 +492,6 @@ app.get('/account', function(req, res) {
   });
 });
 
-app.get("/logout", function(req, res) {
-  req.logout();
-  res.redirect('/');
-});
 
 app.listen(3000, function() {
   console.log('server is listening');
