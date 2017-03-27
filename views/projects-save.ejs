@@ -1,0 +1,24 @@
+<% include commons/partials/header %>
+<div class="container">
+  <!--pre><%=projects[0]%></pre-->
+      <h1>initiatives locales</h1>
+      <div class="row">
+      <% for (var i=0; i < projects.length; i++) { %>
+        <div class="col-sm-12 col-md-12 project-banner">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="thumbnail project-thumbnail">
+                <img src="/uploads/<%= projects[i].photos[0] %>" class="img-responsive">
+              </div>
+            </div>
+            <div class="col-md-9 project-description">
+              <h3>Mon titre</h3>
+              <p>Ma description</p>
+            </div>
+          </div>
+         </div>
+      <% } %>
+    </div>
+
+</div>
+<% include commons/partials/footer %>

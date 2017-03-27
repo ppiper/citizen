@@ -1,0 +1,26 @@
+<% include commons/partials/header %>
+<div class="container projects">
+  <!--pre><%=projects[0]%></pre-->
+      <div class="row">
+        <% for (var i=0; i < projects.length; i++) { %>
+        <div class="col-sm-6 col-md-4 project-banner">
+          <div class="thumbnail project-thumbnail">
+            <div class="sticker-projects">
+              <%= projects[i].step %>
+            </div>
+            <img src="/uploads/<%= projects[i].photos[0] %>" class="img-responsive">
+            <div class="caption">
+                <h3><%= projects[i].title %></h3>
+                <p><%= truncate(projects[i].description, 70) %></p>
+              <p><a href="/project/<%= projects[i]._id %>" class="btn btn-primary" role="button">Read more</a> </p>
+
+            </div>
+          </div>
+
+        </div>
+        <% } %>
+      </div>
+
+</div>
+
+<% include commons/partials/footer %>

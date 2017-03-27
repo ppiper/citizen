@@ -1,0 +1,58 @@
+<!--Voir les valeurs par défault, step: "Created", -->
+<% include commons/partials/header %>
+<div class="container">
+  <h1>Please fill up the form</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <form enctype='multipart/form-data' action="/publish" method="POST" enctype="application/x-www-form-urlencoded">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" class="form-control" id="title" name="title" placeholder="Title" required="required">
+        </div>
+        <div class="form-group">
+          <label for="type">Type</label>
+          <!-- <input type="text" class="form-control" id="categorie" name="categorie" placeholder="categorie"> -->
+          <select type="text" class="form-control" id="type" name="type" class="form-control">
+            <option>Individual</option>
+            <option>Community</option>
+            <option>Charity Organization</option>
+            <option>Foundation</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="category">Category</label>
+          <!-- <input type="text" class="form-control" id="categorie" name="categorie" placeholder="categorie"> -->
+          <select type="text" class="form-control" id="category" name="category" class="form-control">
+            <option>Environment</option>
+            <option>Social</option>
+            <option>Culture</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="texte">Description</label>
+          <input type="text" class="form-control" id="description" name="description" placeholder="Description" required="required">
+        </div>
+        <div class="form-group">
+          <label for="titre">Comments</label>
+          <input type="text" class="form-control" id="comments" name="comments" placeholder="Comments">
+        </div>
+
+        <div class="form-group">
+          <label for="city">City</label>
+          <input type="text" class="form-control" id="city" name="city" placeholder="City">
+        </div>
+        <!-- <div class="form-group">
+          <label for="photo">Photo</label> -->
+          <input type='file' class="form-control" id="photos" name="photos" style="display: none;" multiple />
+          <button type="button" class="btn btn-default" id="btnUpload">Sélectionner des images</button>
+          <br />
+          <!-- <img id="preview" src="#" alt="preview" /> -->
+          <div id="preview"></div>
+        <!-- </div> -->
+
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+<% include commons/partials/footer %>

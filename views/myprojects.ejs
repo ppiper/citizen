@@ -1,0 +1,28 @@
+
+<% include commons/partials/header %>
+
+<h1>Projects</h1>
+
+    <ul>
+      <% for (var i=0; i < mesProjects.length; i++) { %>
+      <li>
+        <form id="project-form" action='/mes-Projects/<%=mesProjects[0]._id%>/delete' method="POST">
+         <div class="row">
+           <div class="col-sm-6 col-md-4">
+             <div class="thumbnail">
+               <img src="<%= mesProjects[i].photo %>" alt="...">
+               <div class="caption">
+                 <h3><a href="/project/<%= mesProjects[i]._id%>"><%= mesProjects[i].titre %></a></h3>
+                 <p><%= mesProjects[i].texte %></p>
+
+               </div>
+             </div>
+           </div>
+         </div>
+         <button type="button" onclick="confirmation()">Delete</button>
+         </form>
+      </li>
+      <% } %>
+    </ul>
+
+<% include commons/partials/footer %>
