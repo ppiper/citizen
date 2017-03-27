@@ -1,10 +1,11 @@
 var mongoose = require('mongoose');
 
 var ProjectSchema = new mongoose.Schema({
-  category: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Category"
-  }],
+  // category: [{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "Category"
+  // }],
+  category: String,
   type: String,
   title: String,
   description: String,

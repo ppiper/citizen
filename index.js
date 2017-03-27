@@ -20,8 +20,6 @@ var Sponsor = require('./models/sponsor');
 
 // var Article = require('./models/article');
 
-var _ = require('lodash');
-
 mongoose.connect('mongodb://localhost:27017/citizencare');
 
 var app = express();
@@ -31,6 +29,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 var truncate = require('truncate');
 app.locals.truncate = truncate;
+
+var _ = require('lodash');
+app.locals._ = _;
 
 // active la gestion de la session
 app.use(expressSession({
@@ -83,16 +84,6 @@ function checkUser(req, res, next) {
   if (req.user.isActive && req.isAuthenticated()) {
     next();
   }
-  next();
-}
-
-function isContributor(req, res, next) {
-  // retrieve all cats from the DB and console.log each one
-  console.log("contributorr:", res);
-  // if (req.) {
-  //   next();
-  // }
-  next();
 }
 
 //function de récupération des actors du projet (find)
@@ -104,6 +95,7 @@ function getResources(req, res, next) {
       console.log('An error occurred');
       console.log(err);
     } else {
+      console.log(project.resources);
       req.resources = project.resources;
       next();
     }
@@ -200,7 +192,7 @@ function joinProject(id, obj, callback) {
       console.log('An error occurred');
       console.log(err);
     } else {
-      callback('JOIN');
+      callback('LEAVE');
     }
   });
 }
@@ -217,7 +209,7 @@ function leaveProject(id, obj, callback) {
       console.log('An error occurred');
       console.log(err);
     } else {
-      callback('LEAVE');
+      callback('JOIN');
     }
   });
 }
@@ -363,12 +355,13 @@ app.post('/publish', upload.array('photos', 12), photosToArray, function(req, re
 
 });
 
-app.get('/project/:id', isContributor, function(req, res) {
+app.get('/project/:id', function(req, res) {
   var id = req.params.id;
   var callback = function(project) {
     //console.log("project:", project);
     res.render('project', {
       isLogged: req.isAuthenticated(),
+      user: req.user,
       project: project,
     });
   }
@@ -388,6 +381,7 @@ app.get('/project/:id', isContributor, function(req, res) {
 
 
 app.post('/project/:id/join', checkUser, getResources, function(req, res) {
+  console.log(req.resources);
   var id = req.params.id;
   var callback = (button) => {
     res.send(button);

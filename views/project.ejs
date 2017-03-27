@@ -21,7 +21,13 @@
         </div>
       </div>
       <div class="buttons">
-        <button type="button" class="btn btn-primary btn-lg btn-block button-join" data-project="<%= project._id %>">JOIN</button>
+        <button type="button" class="btn btn-primary btn-lg btn-block button-join" data-project="<%= project._id %>"><%
+          if (project.resources.length && _.find(project.resources, {contributor: user._id})) {
+            %>LEAVE<%
+          } else {
+            %>JOIN<%
+          }
+        %></button>
         <br>
           <div class="row">
             <div class="col-sm-6">
