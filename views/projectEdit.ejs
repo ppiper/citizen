@@ -1,0 +1,63 @@
+<!--Voir les valeurs par défault, step: "Created", -->
+<% include commons/partials/header %>
+<div class="container">
+  <h1>Edit</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <form enctype='multipart/form-data' action="/publish" method="POST" enctype="application/x-www-form-urlencoded">
+        <div class="form-group">
+          <label for="title">Titre</label>
+          <input type="text" class="form-control" id="title" name="title" placeholder="Title" required="required" value='<%=project.title%>' >
+        </div>
+        <div class="form-group">
+          <label for="type">Type</label>
+          <!-- <input type="text" class="form-control" id="categorie" name="categorie" placeholder="categorie"> -->
+          <select type="text" class="form-control" id="type" name="type" class="form-control">
+            <option<% if (project.type === 'Individual') { %> selected="selected"<% } %>>Individual</option>
+            <option<% if (project.type === 'Community') { %> selected="selected"<% } %>>Community</option>
+            <option<% if (project.type === 'Charity Organization<') { %> selected="selected"<% } %>>Charity Organization<</option>
+            <option<% if (project.type === 'Foundation<') { %> selected="selected"<% } %>>Foundation<</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="category">Category</label>
+          <!-- <input type="text" class="form-control" id="categorie" name="categorie" placeholder="categorie"> -->
+          <select type="text" class="form-control" id="category" name="category" class="form-control">
+            <option<% if (project.category === 'Environment') { %> selected="selected"<% } %>>Environment</option>
+            <option<% if (project.category === 'Social') { %> selected="selected"<% } %>>Social</option>
+            <option<% if (project.category === 'Culture') { %> selected="selected"<% } %>>Culture</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="texte">Description</label>
+          <textarea class="form-control" id="description" name="description" placeholder="Description" required="required"><%=project.description%></textarea>
+        </div>
+        <div class="form-group">
+          <label for="titre">Comments</label>
+          <input type="text" class="form-control" id="comments" name="comments" placeholder="Comments" value='<%=project.comments%>'>
+        </div>
+
+        <div class="form-group">
+          <label for="city">City</label>
+          <input type="text" class="form-control" id="city" name="city" placeholder="City" value='<%=project.city%>'>
+        </div>
+
+        <div class="form-group">
+          <label for="contributorMax">Contributor Number</label>
+          <input type="text" class="form-control" id="city" name="contributorMax" placeholder="Contributors required" value='<%=project.contributorMax%>'>
+        </div>
+        <!-- <div class="form-group">
+          <label for="photo">Photo</label> -->
+          <input type='file' class="form-control" id="photos" name="photos" style="display: none;" multiple />
+          <button type="button" class="btn btn-default" id="btnUpload">Sélectionner des images</button>
+          <br />
+          <!-- <img id="preview" src="#" alt="preview" /> -->
+          <div id="preview"></div>
+        <!-- </div> -->
+
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+<% include commons/partials/footer %>

@@ -29,8 +29,8 @@
               <ul class="nav navbar-nav">
                 <li class="active"><a href="/">Home<span class="sr-only">(current)</span></a></li>
                 <li><a href="/publish">Publish your cause</a></li>
-                <li><a href="/projects">causes</a></li>
-                <li><a href="/about">about</a></li>
+                <li><a href="/projects">Causes</a></li>
+                <li><a href="/about">About</a></li>
                 <li><a href="/myprojects">My causes</a></li>
 
               </ul>
@@ -39,7 +39,9 @@
               <!-- Large modal -->
               <%if (isLogged) {%>
                 <a href="/account"><button class="btn btn-primary">My account</button></a>
-              <%}%>
+              <%} else {%>
+                <a href="#"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#login">Login</button></a>
+              <% } %>
             </li>
 
             <li>
@@ -47,8 +49,7 @@
               <%if (isLogged) {%>
                 <a href="/logout"><button class="btn btn-primary">Logout</button></a>
               <%} else {%>
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#login">Login</button>
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#register">register</button>
+                  <a href="#"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#register">register</button></a>
               <%}%>
             </li>
             <!-- Button trigger modal -->

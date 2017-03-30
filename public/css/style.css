@@ -13,13 +13,17 @@ h1 {
   background-position: center;
   background-size: cover;
   margin-top: -90px;
-  padding-top: 90px; }
+  padding-top: 48vh; }
 
-.hero > a {
-  width: 200px;
-  margin-left: 50vw;
-  margin-top: 50vh;
-  transform: translate(-100px, -90px); }
+a.btn-home {
+  width: 500px;
+  height: 80px;
+  font-size: 50px;
+  color: rgba(255, 255, 255, 0.6); }
+
+a.btn-home:hover {
+  text-decoration: none;
+  color: white; }
 
 /*
 .project-thumbnail > .caption {
@@ -30,7 +34,7 @@ h1 {
   .navbar-nav.navbar-right > li > a {
     padding: 8px !important; } }
 .project-banner .thumbnail {
-  margin-bottom: 0;
+  margin-bottom: 40px;
   min-height: 420px; }
 
 .project-description > h3 {
@@ -45,7 +49,8 @@ h1 {
   left: 20px;
   top: 20px;
   background-color: white;
-  padding: 5px; }
+  padding: 5px;
+  margin-bottom: 20px; }
 
 .sticker-project {
   position: absolute;

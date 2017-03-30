@@ -1,3 +1,4 @@
+
 function confirmation() {
   if (confirm("Voulez-vous réellement supprimer cet élément?")) {
     $('#annonce-form').submit();

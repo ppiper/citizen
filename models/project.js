@@ -5,11 +5,14 @@ var ProjectSchema = new mongoose.Schema({
   //   type: mongoose.Schema.Types.ObjectId,
   //   ref: "Category"
   // }],
+
   category: String,
   type: String,
   title: String,
   description: String,
   comments:String,
+  contributorMin:Number,
+  contributorMax:Number,
   step: { type: String, default: "define" }, // etat du projet
   /*city: {
     type: mongoose.Schema.Types.ObjectId,
@@ -26,9 +29,11 @@ var ProjectSchema = new mongoose.Schema({
   },
   creator: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+    ref: "User",
   },
+  //possibilité de rajouter éventuellement une variable "isAdmin" : active dans le cas de plusieurs administrteurs, suivant le modele resources
   resources: [{ // les ressources
+
       contributor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
