@@ -82,22 +82,22 @@ function getMyProjects(creator, callback) {
 }
 
 
-function updateProject(id, obj, callback) {
-  console.log(id, obj);
-  Project.update({
-    _id: id
-  }, {
-    $set: obj,
-  }, function(err, response) {
-    if (err) {
-      console.log('An error occurred');
-      console.log(err);
-    } else {
-      //console.log("update", response);
-      callback(true);
-    }
-  });
-}
+// function updateProject(id, obj, callback) {
+//   console.log(id, obj);
+//   Project.update({
+//     _id: id
+//   }, {
+//     $set: obj,
+//   }, function(err, response) {
+//     if (err) {
+//       console.log('An error occurred');
+//       console.log(err);
+//     } else {
+//       //console.log("update", response);
+//       callback(true);
+//     }
+//   });
+// }
 
 // JOIN PROJECT
 function joinProject(id, obj, callback) {
@@ -201,19 +201,6 @@ router.post('/publish', upload.array('photos', 12), photosToArray, function(req,
 
 });
 
-// router.get('/project/:id', function(req, res) {
-//   var id = req.params.id;
-//   var callback = function(project) {
-//     //console.log("project:", project);
-//     res.render('project', {
-//       isLogged: req.isAuthenticated(),
-//       user: req.user,
-//       project: project,
-//     });
-//   }
-//   getProject(id, callback);
-// });
-
 router.get('/project/:id', function(req, res) {
   var id = req.params.id;
   var callback = function(project) {
@@ -222,10 +209,72 @@ router.get('/project/:id', function(req, res) {
       isLogged: req.isAuthenticated(),
       user: req.user,
       project: project,
+      participation: (project.resources.length / project.contributorMax * 100).toString() + '%',
     })
   }
   getProject(id, callback);
 });
+
+
+function updateProject(id,user,formFields, callback) {
+  // console.log('formFields',formFields);
+  Project.update({
+    _id: id
+  }, {
+    $set: {
+      category: formFields.category,
+      type: formFields.type,
+      title: formFields.title,
+      description: formFields.description,
+      city: formFields.city,
+      comments: formFields.comments,
+      // photos: req.photos,
+      contributorMax: formFields.contributorMax,
+
+    },
+  }, function(err, formFields) {
+    if (err) {
+      console.log('An error occurred');
+      console.log(err);
+    } else {
+      // callback(user);
+      getProject(id, callback);
+      // callback(id,user);
+    }
+  });
+}
+
+router.post('/project/:id/edit', upload.array('photos', 12), photosToArray, function(req, res) {
+  var id = req.params.id;
+  var projectFormFields = {
+    category: req.body.category,
+    type: req.body.type,
+    title: req.body.title,
+    description: req.body.description,
+    city: req.body.city,
+    comments: req.body.comments,
+    photos: req.photos,
+    contributorMax: req.body.contributorMax,
+  };
+
+  var callback = function(project) {
+    //console.log("project:", project);
+    res.render('project', {
+      isLogged: req.isAuthenticated(),
+      user: req.user,
+      project: project,
+    })
+  }
+
+  console.log('before');
+  // console.log('id :', id);
+  // console.log('user :', req.user);
+  // console.log('form :', projectFormFields);
+  updateProject(id,req.user,projectFormFields, callback);
+  console.log('after');
+  // });
+});
+
 
 router.post('/project/:id/join', checkUser, getResources, function(req, res) {
   console.log(req.resources);
@@ -247,6 +296,7 @@ router.post('/project/:id/join', checkUser, getResources, function(req, res) {
 });
 
 router.get('/project/:id/edit', checkUser, checkUserRole, function(req, res) {
+  // console.log('hello');
   var id = req.params.id;
   var callback = (project) => {
     res.render('projectEdit',
@@ -298,15 +348,6 @@ router.get('/projects', getProjects, function(req, res) {
     });
 });
 
-
-//
-// router.get('/editProject', function(req, res) {
-//   res.render('editProject');
-// });
-//
-// router.post('/editProject', function(req, res) {
-//   res.render('editProject');
-// });
 
 
 

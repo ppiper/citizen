@@ -65,7 +65,7 @@ var coreRoutes = require("./routes/core.js");
 var userRoutes = require("./routes/user.js");
 var projectRoutes = require("./routes/project.js");
 // Les routes relatives aux utilisateurs auront pour prefix d'URL `/user`
-app.use("/", coreRoutes);
+app.use("/", coreRoutes); // renommer les routes ulterieurement
 app.use("/", userRoutes);
 app.use("/", projectRoutes);
 

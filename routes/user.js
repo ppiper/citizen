@@ -21,7 +21,8 @@ function updateAccount(user,formFields, callback) {
       console.log('An error occurred');
       console.log(err);
     } else {
-      callback(formFields);
+      // callback(formFields);
+      callback(user);
     }
   });
 }
